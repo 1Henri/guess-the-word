@@ -70,15 +70,50 @@ const makeGuess = function(guess){
       } else {
         guessedLetters.push(guess);
         console.log(guessedLetters);
+        showGuessedLetters();
+        updateWordInProgress(guessedLetters);
       }
     };
    
+//==Create a Function to Show the Guessed Letters
+    
+const pageLetterUpdate = function (){
+    guessUl.innerHTML = "";
+    for (const letter of guessedLetters) {
+        const li = document.createElement("li");
+        li.innerText = letter;
+        pageLetterUpdate.append(li);
+      }
+};
+
+//==Create a Function to Update the Word in Progress
+
+const wordInProgressUpdate = function (guessedLetters){
+    const wordUpper = word.toUpperCase();
+    const wordArray = wordUpper.split("");
+    const revealWord = [];
+    for (const letter of wordArray) {
+      if (guessedLetters.includes(letter)) {
+        revealWord.push(letter.toUpperCase());
+      } else {
+        revealWord.push("●");
+      }
+    }
 
 
+    // console.log(revealWord);
+    wordInProgress.innerText = revealWord.join("");
+    checkIfWin();
+  };
+  
+//==Create a Function to Check If the Player Won
 
-
-
-
+const hasPlayerWon = function (){
+if (word.toUpperCase() === wordInProgress.innerText) {
+    message.classList.add("win");
+    message.innerHTML = `<p class="highlight">You guessed the correct word! Congrats!</p>`;
+    }
+};
 
 
 
